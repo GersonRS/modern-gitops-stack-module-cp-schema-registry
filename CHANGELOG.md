@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/GersonRS/modern-gitops-stack-module-cp-schema-registry/compare/v1.1.0...v1.2.0) (2024-08-19)
+
+
+### 🚀 New Features
+
+* change namespace ([217ec17](https://github.com/GersonRS/modern-gitops-stack-module-cp-schema-registry/commit/217ec17bf7f3e671b223db248e24f09180614543))
+
+
+### 📚 Documentation
+
+* **terraform-docs:** generate docs and write to README.adoc ([750ad91](https://github.com/GersonRS/modern-gitops-stack-module-cp-schema-registry/commit/750ad91f9ed4dec226e61077777fa8e57a0601b3))
+
 ## [1.1.0](https://github.com/GersonRS/modern-gitops-stack-module-cp-schema-registry/compare/v1.0.0...v1.1.0) (2024-08-19)
 
 
