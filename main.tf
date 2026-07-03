@@ -7,6 +7,17 @@ resource "random_password" "oauth2_proxy_cookie_secret" {
   special = false
 }
 
+data "kubernetes_secret" "kafka_user" {
+  metadata {
+    name      = var.kafka_password_secret_name
+    namespace = var.kafka_password_secret_namespace
+  }
+
+  depends_on = [
+    null_resource.dependencies
+  ]
+}
+
 resource "argocd_project" "this" {
   count = var.argocd_project == null ? 1 : 0
 
