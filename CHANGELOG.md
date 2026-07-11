@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.6.0](https://github.com/gersonrs/modern-gitops-stack-module-cp-schema-registry/compare/v1.5.1...v1.6.0) (2026-07-11)
+
+
+### 🚀 New Features
+
+* add namespace_labels variable to all modules ([e80d061](https://github.com/gersonrs/modern-gitops-stack-module-cp-schema-registry/commit/e80d061b2a059dea79b1f01eeecddffa69b8c88b))
+* harden schema registry broker authentication ([caf7d55](https://github.com/gersonrs/modern-gitops-stack-module-cp-schema-registry/commit/caf7d557adf3e21c653166acd952eacde3bc31ac))
+* harden schema registry broker authentication ([3814e4d](https://github.com/gersonrs/modern-gitops-stack-module-cp-schema-registry/commit/3814e4db549072e9e31bbcc9e99ed10e7af4764f))
+
+
+### 🔥 Bug Fixes
+
+* tolerate missing kafka user secret during bootstrap ([6d244ff](https://github.com/gersonrs/modern-gitops-stack-module-cp-schema-registry/commit/6d244ffa5546a08ea4858221e3538ca79278b2ab))
+
 ## [1.5.1](https://github.com/gersonrs/modern-gitops-stack-module-cp-schema-registry/compare/v1.5.0...v1.5.1) (2026-05-20)
 
 
