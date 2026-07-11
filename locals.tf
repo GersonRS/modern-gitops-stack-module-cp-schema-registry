@@ -1,5 +1,6 @@
 locals {
-  domain = format("schema-registry.%s", trimprefix("${var.subdomain}.${var.base_domain}", "."))
+  domain         = format("schema-registry.%s", trimprefix("${var.subdomain}.${var.base_domain}", "."))
+  kafka_password = lookup(data.kubernetes_secret.kafka_user.data, var.kafka_password_secret_key, "")
 
   helm_values = [{
     cp-helm-charts = {
@@ -12,7 +13,12 @@ locals {
       cp-schema-registry = {
         enabled = true
         kafka = {
-          bootstrapServers = "PLAINTEXT://${var.kafka_broker_name}-kafka-bootstrap:9092"
+          bootstrapServers = "SASL_PLAINTEXT://${var.kafka_broker_name}-kafka-bootstrap:9092"
+        }
+        configurationOverrides = {
+          "kafkastore.security.protocol" = "SASL_PLAINTEXT"
+          "kafkastore.sasl.mechanism"    = "SCRAM-SHA-512"
+          "kafkastore.sasl.jaas.config"  = "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"${var.kafka_username}\" password=\"${local.kafka_password}\";"
         }
       }
       cp-kafka-rest = {

@@ -1,4 +1,5 @@
-{{- if .Values.oauth2proxy.enabled }}
+{{- $oauth2proxy := .Values.oauth2proxy | default dict }}
+{{- if $oauth2proxy.enabled }}
 ---
 apiVersion: v1
 kind: Secret
@@ -8,8 +9,8 @@ metadata:
     app.kubernetes.io/name: schema-registry-oauth2-proxy
 type: Opaque
 stringData:
-  OAUTH2_PROXY_CLIENT_SECRET: {{ .Values.oauth2proxy.oidc.clientSecret | quote }}
-  OAUTH2_PROXY_COOKIE_SECRET: {{ .Values.oauth2proxy.cookieSecret | quote }}
+  OAUTH2_PROXY_CLIENT_SECRET: {{ $oauth2proxy.oidc.clientSecret | quote }}
+  OAUTH2_PROXY_COOKIE_SECRET: {{ $oauth2proxy.cookieSecret | quote }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -33,10 +34,10 @@ spec:
           args:
             - --provider=keycloak-oidc
             - --http-address=0.0.0.0:4180
-            - --upstream={{ .Values.oauth2proxy.upstreamUrl }}
-            - --redirect-url={{ .Values.oauth2proxy.redirectUrl }}
-            - --oidc-issuer-url={{ .Values.oauth2proxy.oidc.issuerUrl }}
-            - --client-id={{ .Values.oauth2proxy.oidc.clientId }}
+            - --upstream={{ $oauth2proxy.upstreamUrl }}
+            - --redirect-url={{ $oauth2proxy.redirectUrl }}
+            - --oidc-issuer-url={{ $oauth2proxy.oidc.issuerUrl }}
+            - --client-id={{ $oauth2proxy.oidc.clientId }}
             - --email-domain=*
             - --scope=openid email profile groups
             - --cookie-secure=true
@@ -45,7 +46,7 @@ spec:
             - --pass-access-token=true
             - --pass-user-headers=true
             - --skip-jwt-bearer-tokens=true
-            {{- range .Values.oauth2proxy.extraArgs }}
+            {{- range $oauth2proxy.extraArgs }}
             - {{ . | quote }}
             {{- end }}
           env:

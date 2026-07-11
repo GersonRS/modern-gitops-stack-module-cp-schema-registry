@@ -7,6 +7,17 @@ resource "random_password" "oauth2_proxy_cookie_secret" {
   special = false
 }
 
+data "kubernetes_secret" "kafka_user" {
+  metadata {
+    name      = var.kafka_password_secret_name
+    namespace = var.kafka_password_secret_namespace
+  }
+
+  depends_on = [
+    null_resource.dependencies
+  ]
+}
+
 resource "argocd_project" "this" {
   count = var.argocd_project == null ? 1 : 0
 
@@ -75,6 +86,12 @@ resource "argocd_application" "this" {
     }
 
     sync_policy {
+      dynamic "managed_namespace_metadata" {
+        for_each = length(var.namespace_labels) > 0 ? [var.namespace_labels] : []
+        content {
+          labels = managed_namespace_metadata.value
+        }
+      }
       dynamic "automated" {
         for_each = toset(var.app_autosync == { "allow_empty" = tobool(null), "prune" = tobool(null), "self_heal" = tobool(null) } ? [] : [var.app_autosync])
         content {

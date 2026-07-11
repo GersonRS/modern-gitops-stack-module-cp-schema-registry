@@ -16,5 +16,9 @@ terraform {
       source  = "hashicorp/random"
       version = ">= 3"
     }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = ">= 2"
+    }
   }
 }
