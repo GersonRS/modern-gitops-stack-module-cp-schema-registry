@@ -1,6 +1,6 @@
 locals {
   domain         = format("schema-registry.%s", trimprefix("${var.subdomain}.${var.base_domain}", "."))
-  kafka_password = try(data.kubernetes_secret.kafka_user.data[var.kafka_password_secret_key], "")
+  kafka_password = lookup(data.kubernetes_secret.kafka_user.data, var.kafka_password_secret_key, "")
 
   helm_values = [{
     cp-helm-charts = {
